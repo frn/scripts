@@ -1,0 +1,52 @@
+#!/usr/bin/python2
+'''
+
+@autahor: frn
+'''
+
+import argparse
+import os
+import sys
+
+
+parser = argparse.ArgumentParser(description='Add playlists to mpd')
+parser.add_argument('-c', '--clear', action='store_true', help='If current playlist should be cleared')
+parser.add_argument('-s', '--save', help='If save playlist')
+parser.add_argument('-p', '--play', action='store_true', help='If playlist have to by played after adding ')
+parser.add_argument('-d', '--delete', action='store_true', help='If playlist have to by cleared after adding ')
+parser.add_argument('-m', '--mpd', type=str, default=os.getenv("HOME") + "/.mpd/playlists/",
+                    help='MPD playlists directory')
+parser.add_argument('playlists', nargs='+', help='playlist files')
+
+args = parser.parse_args()
+
+if not os.path.isdir(args.mpd):
+    print ("\nDirectory {0} don't exists\n".format(args.mpd))
+    parser.print_help()
+    sys.exit(1)
+
+if args.clear:
+    os.system("mpc clear")
+
+if args.save:
+    save = args.save.strip().replace(".m3u", "")
+    playlist_file = open(args.mpd + save + ".m3u", 'w')
+
+for play in args.playlists:
+    playlist = open(play).readlines()
+    for line in playlist:
+        if line.find("http") != -1:
+            http = "http" + line.split("http")[1].strip()
+            os.system("mpc add " + http)
+            if args.save:
+                playlist_file.write(http + "\n")
+
+if args.save:
+    playlist_file.close()
+
+if args.play:
+    os.system("mpc play")
+
+if args.delete:
+    for play in args.playlists:
+        os.system("rm " + play)

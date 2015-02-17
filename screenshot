@@ -1,0 +1,10 @@
+#!/bin/sh
+
+#cd /home/frn/screenshoots
+
+
+PROG="escrotum"
+SCREENSHOTS="/home/frn/screenshots/"
+
+${PROG} ${1} '%Y%m%d%H%M%S_$wx$h.png' -e 'mv $f /home/frn/screenshots/'
+

@@ -1,0 +1,21 @@
+#!/bin/sh
+
+
+mpdif
+
+gvfs-mount cdda://sr0/  1>/dev/null 2>&1
+
+
+mpc clear
+sleep 5
+
+mpc update --wait 1>/dev/null
+
+
+
+mpc ls audio | mpc add
+
+mpc play
+
+
+

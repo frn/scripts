@@ -1,0 +1,4 @@
+#!/bin/sh
+
+screen -RD -dmS wvdial -m sudo wvdial
+

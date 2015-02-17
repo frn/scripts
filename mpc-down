@@ -1,0 +1,14 @@
+#!/bin/sh
+
+
+test=`mpc | grep pause`
+
+if [ -z "$test" ]
+then
+ 	mpc pause
+else
+	mpc stop
+    killall -9 mpd
+fi
+
+

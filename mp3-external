@@ -1,0 +1,18 @@
+#!/bin/bash
+
+external="/media/dane/mp3"
+link="/home/music/mp3_dane"
+
+
+if [ ! -e $link ]
+then
+        if [ -e $external ]
+        then
+                ln -s $external $link
+                mpc --no-status update
+                
+        else
+                rm $link
+                mpc --no-status update
+        fi
+fi

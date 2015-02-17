@@ -1,0 +1,23 @@
+#!/bin/sh
+
+
+mpdif
+
+test=`mpc | grep playing`
+
+if [ -z "$test" ]
+then
+  mpc play
+else
+  test2=`mpc | grep oryzont`
+    if [ ! -z "$test2" ]
+    then
+      mpc1=`/home/frn/.bin/radiohoryzont`
+      mpc2=`mpc | sed '2,3!d'`
+      mpc=${mpc1}'\n'${mpc2}
+    else
+      mpc=`mpc`
+    fi
+   zenity --info --text "$mpc"
+fi
+

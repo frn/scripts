@@ -1,0 +1,48 @@
+#!/bin/sh
+
+output="VGA1"
+
+test=`xrandr | grep "${output} disconnected"`
+
+if [ -n "$1" ]
+then
+
+if [ -z "$test" ]
+then
+
+mode='right'
+run='on'
+
+
+if [ "$1" == "$mode" -a $run == "off" ]
+then
+
+
+xrandr --output VGA1 --off
+xrandr --output LVDS1 --auto
+
+sed -i "/^run=/c\run='on'" $0
+
+else
+
+xrandr --output VGA1 --off
+xrandr --output VGA1 --auto
+xrandr --output LVDS1 --auto
+
+sed -i "/^mode=/c\mode='$1'" $0
+sed -i "/^run=/c\run='off'" $0
+
+case "$1" in
+"both")
+   xrandr --output VGA1 --right-of LVDS1
+;;
+"right")
+   xrandr --output LVDS1 --off  
+;;
+esac 
+
+fi
+
+fi
+
+fi

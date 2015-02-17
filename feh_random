@@ -1,0 +1,6 @@
+#!/bin/bash
+
+DIR='/home/dane/wallpapers/themes'
+
+feh --recursive --randomize --bg-fill $DIR
+

@@ -1,0 +1,3 @@
+#!/usr/bin/sh
+
+wine /home/wine/drive_c/progs/SumatraPDF.exe "$1"

@@ -1,0 +1,23 @@
+#!/bin/sh
+
+
+mode='vertical'
+
+
+case "$mode" in
+"simple")
+   stiler simple
+   sed -i "/^mode=/c\mode='vertical'" $0
+;;
+"vertical")
+   stiler vertical
+   sed -i "/^mode=/c\mode='horizontal'" $0
+;;
+"horizontal")
+   stiler horizontal
+   sed -i "/^mode=/c\mode='simple'" $0
+;;
+
+
+esac 
+

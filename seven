@@ -1,0 +1,5 @@
+#!/bin/sh
+
+sudo load_vboxdrv
+
+VBoxManage startvm "JG7_starter"

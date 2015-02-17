@@ -1,0 +1,695 @@
+#!/usr/bin/python2
+'''
+Created on 3 paz 2014
+
+@author: frn
+'''
+
+class mimeGenerator:
+    
+    apps = ""
+    assApps = ""
+    
+    ebookMime = []
+    imageMime = []
+    graphMime = []
+    pdfMime = []
+    archiveMime = []
+    editorMime = []
+    webMime = []
+    calcMime = []
+    writerMime = []
+    impressMime = []
+    drawMime = []
+    mathMime = []
+    audioMime = []
+    videoMime = []
+    
+    imageProgram =""
+    graphProgram =""
+    archiveProgram =""
+    pdfProgram =""
+    webProgram = ""
+    calcProgram = ""
+    writerProgram = ""
+    impressProgram = ""
+    drawProgram =""
+    mathProgram = ""
+    editorProgram = ""
+    audioProgram = ""
+    videoProgram = ""
+    managerProgram = ""
+    ebookProgram = ""
+    
+    file = ""
+    mimeFile = ""
+    
+    def mimeGenerate(self, mime, program):
+
+        for i in mime:
+            self.apps = self.apps + "\n" + i + "=" + program + ".desktop"
+            self.assApps = self.assApps + "\n" + i + "=" + program + ".desktop;"
+        self.apps = self.apps + "\n"
+        self.assApps = self.assApps + "\n"
+    
+    def generate(self):
+        self.mimeGenerate(self.imageMime, self.imageProgram)
+        self.mimeGenerate(self.graphMime, self.graphProgram)
+        self.mimeGenerate(self.pdfMime, self.pdfProgram)
+        self.mimeGenerate(self.archiveMime, self.archiveProgram)
+        self.mimeGenerate(self.webMime, self.webProgram)
+        self.mimeGenerate(self.calcMime, self.calcProgram)
+        self.mimeGenerate(self.writerMime, self.writerProgram)
+        self.mimeGenerate(self.impressMime, self.impressProgram)
+        self.mimeGenerate(self.drawMime, self.drawProgram)
+        self.mimeGenerate(self.mathMime, self.mathProgram)
+        self.mimeGenerate(self.editorMime, self.editorProgram)
+        self.mimeGenerate(self.audioMime, self.audioProgram)
+        self.mimeGenerate(self.videoMime, self.videoProgram)
+        self.mimeGenerate(self.ebookMime, self.ebookProgram)
+        
+        self.openFile()
+        self.write()
+        self.closeFile()
+    
+    def __init__(self,imageMime, imageProgram, graphMime, graphProgram, pdfMime, pdfProgram, 
+                 archiveMime, archiveProgram, webMime, webProgram, calcMime, calcProgram,
+                 writerMime, writerProgram, impressMime, impressProgram, drawMime, drawProgram, 
+                 mathMime, mathProgram, editorMime, editorProgram, audioMime, audioProgram,
+                 videoMime, videoProgram, ebookMime, ebookProgram,
+                 mimeFile
+                 ):
+
+
+
+        self.ebookMime = ebookMime
+        self.imageMime = imageMime
+        self.graphMime = graphMime
+        self.pdfMime = pdfMime
+        self.archiveMime = archiveMime
+        self.editorMime = editorMime
+        self.webMime = webMime
+        self.calcMime = calcMime
+        self.writerMime = writerMime
+        self.impressMime = impressMime
+        self.drawMime = drawMime
+        self.mathMime = mathMime
+        self.audioMime = audioMime
+        self.videoMime = videoMime
+        
+        self.imageProgram = imageProgram
+        self.graphProgram = graphProgram
+        self.archiveProgram = archiveProgram
+        self.pdfProgram = pdfProgram
+        self.webProgram = webProgram
+        self.calcProgram = calcProgram
+        self.writerProgram = writerProgram
+        self.impressProgram = impressProgram
+        self.drawProgram = drawProgram
+        self.mathProgram = mathProgram
+        self.editorProgram = editorProgram
+        self.audioProgram = audioProgram
+        self.videoProgram = videoProgram
+        self.managerProgram = managerProgram
+        self.ebookProgram = ebookProgram
+        
+        self.mimeFile = mimeFile
+        
+        self.apps ="[Default Applications]\n\napplication/x-dia-diagram=dia.desktop\n" + "inode/directory=" \
+        + self.managerProgram + ".desktop\n"
+        self.assApps = "[Added Associations]\n\napplication/x-dia-diagram=dia.desktop\n" \
+        + "inode/directory=" + self.managerProgram + ".desktop\n"
+            
+    def openFile(self):
+        self.file=open(self.mimeFile,'w')
+        
+    def closeFile(self):
+        self.file.close()
+        
+    def write(self):
+        print >>self.file,  self.apps + "\n\n" + self.assApps
+
+if __name__ == "__main__":
+
+    mimeFile = "/home/frn/.local/share/applications/mimeapps.list"
+    
+    imageProgram ="mirage"
+    graphProgram ="gimp"
+    archiveProgram ="xarchiver"
+    pdfProgram ="mupdf"
+    webProgram = "firefox"
+    
+    calcProgram = "libreoffice-calc"
+    writerProgram = "libreoffice-writer"
+    impressProgram = "libreoffice-impress"
+    drawProgram ="libreoffice-draw"
+    mathProgram = "libreoffice-math"
+    editorProgram = "gvir"
+    audioProgram = "mpc-play"
+    videoProgram = "smplayer"
+    managerProgram = "sunflower"
+    ebookProgram = "calibre"
+        
+    
+    ebookMime = [
+    "application/x-mobipocket-ebook", 
+    "application/epub+zip", 
+    
+    ]
+    
+    imageMime = ["image/bmp",
+    "image/gif",
+    "image/jpeg",
+    "image/jpg",
+    "image/pjpeg",
+    "image/png",
+    "image/svg+xml",
+    "image/svg+xml-compressed",
+    "image/x-bmp",
+    "image/x-gray",
+    "image/x-icb",
+    "image/x-ico",
+    "image/x-pcx",
+    "image/x-png",
+    "image/x-portable-anymap",
+    "image/x-portable-bitmap",
+    "image/x-portable-graymap",
+    "image/x-portable-pixmap",
+    "image/x-xbitmap",
+    "image/x-xpixmap",
+    "image/vnd.wap.wbmp"
+    ]
+    
+    graphMime = [
+    "image/g3fax",
+    "image/x-compressed-xcf",
+    "image/x-fits",
+    "image/x-icon",
+    "image/x-psd",
+    "image/x-sgi",
+    "image/x-sun-raster",
+    "image/x-tga",
+    "image/x-xcf",
+    "image/x-xwindowdump"
+    "application/mxf",
+    "application/ogg",
+    "application/ram",
+    "application/sdp",
+    "application/smil",
+    "application/smil+xml",
+    "application/vnd.ms-wpl",
+    "application/vnd.rn-realmedia",
+    "application/x-extension-m4a",
+    "application/x-extension-mp4",
+    "application/x-flac",
+    "application/x-flash-video",
+    "application/x-matroska",
+    "application/x-netshow-channel",
+    "application/x-ogg",
+    "application/x-quicktime-media-link",
+    "application/x-quicktimeplayer",
+    "application/x-shorten",
+    "application/x-smil",
+    "application/xspf+xml",
+    "image/vnd.rn-realpix",
+    "text/x-google-video-pointer",
+    "video/3gpp",
+    "video/dv",
+    "video/fli",
+    "video/flv",
+    "video/mp2t",
+    "video/mp4",
+    "video/mp4v-es",
+    "video/mpeg",
+    "video/msvideo",
+    "video/ogg",
+    "video/quicktime",
+    "video/vivo",
+    "video/vnd.divx",
+    "video/vnd.rn-realvideo",
+    "video/vnd.vivo",
+    "video/webm",
+    "video/x-anim",
+    "video/x-avi",
+    "video/x-flc",
+    "video/x-fli",
+    "video/x-flic",
+    "video/x-flv",
+    "video/x-m4v",
+    "video/x-matroska",
+    "video/x-mpeg",
+    "video/x-ms-asf",
+    "video/x-ms-asx",
+    "video/x-msvideo",
+    "video/x-ms-wm",
+    "video/x-ms-wmv",
+    "video/x-ms-wmx",
+    "video/x-ms-wvx",
+    "video/x-nsv",
+    "video/x-ogm+ogg",
+    "video/x-theora+ogg",
+    "video/x-smplayer-stream",
+    "x-content/video-dvd",
+    "x-content/video-vcd",
+    "x-content/video-svcd",
+    "x-scheme-handler/pnm",
+    "x-scheme-handler/mms",
+    "x-scheme-handler/net",
+    "x-scheme-handler/rtp",
+    "x-scheme-handler/rtsp",
+    "x-scheme-handler/mmsh",
+    "x-scheme-handler/uvox",
+    "x-scheme-handler/icy",
+    "x-scheme-handler/icyx"
+    "image/x-pict",
+    "misc/ultravox",
+    "text/google-video-pointer",
+    "text/x-google-video-pointer",
+    "video/3gpp",
+    "video/dv",
+    "video/fli",
+    "video/flv",
+    "video/mp2t",
+    "video/mp4",
+    "video/mp4v-es",
+    "video/mpeg",
+    "video/msvideo",
+    "video/ogg",
+    "video/quicktime",
+    "video/vivo",
+    "video/vnd.divx",
+    "video/vnd.rn-realvideo",
+    "video/vnd.vivo",
+    "video/webm",
+    "video/x-anim",
+    "video/x-avi",
+    "video/x-flc",
+    "video/x-fli",
+    "video/x-flic",
+    "video/x-flv",
+    "video/x-m4v",
+    "video/x-matroska",
+    "video/x-mpeg",
+    "video/x-ms-asf",
+    "video/x-ms-asx",
+    "video/x-msvideo",
+    "video/x-ms-wm",
+    "video/x-ms-wmv",
+    "video/x-ms-wmx",
+    "video/x-ms-wvx",
+    "video/x-nsv",
+    "video/x-ogm+ogg",
+    "video/x-theora+ogg",
+    "video/x-smplayer-stream",
+    "x-content/video-dvd",
+    "x-content/video-vcd",
+    "x-content/video-svcd",
+    "x-scheme-handler/pnm",
+    "x-scheme-handler/mms",
+    "x-scheme-handler/net",
+    "x-scheme-handler/rtp",
+    "x-scheme-handler/rtsp",
+    "x-scheme-handler/mmsh",
+    "x-scheme-handler/uvox",
+    "x-scheme-handler/icy",
+    "x-scheme-handler/icyx"
+    ]
+    
+    pdfMime = [
+    "application/pdf",
+    "application/x-bzpdf",
+    "application/x-gzpdf",
+    "application/postscript",
+    "application/x-bzpostscript",
+    "application/x-gzpostscript",
+    "image/x-eps",
+    "image/x-bzeps",
+    "image/x-gzeps",
+    "application/x-dvi",
+    "application/x-bzdvi",
+    "application/x-gzdvi",
+    "image/vnd.djvu",
+    "image/tiff",
+    "application/x-cbr",
+    "application/x-cbz",
+    "application/x-cb7",
+    ]
+    
+    archiveMime = ["application/x-7z-compressed",
+    "application/x-7z-compressed-tar",
+    "application/x-ace",
+    "application/x-alz",
+    "application/x-ar",
+    "application/x-arj",
+    "application/x-bzip",
+    "application/x-bzip-compressed-tar",
+    "application/x-bzip1",
+    "application/x-bzip1-compressed-tar",
+    "application/x-cabinet",
+    "application/x-cd-image",
+    "application/x-compress",
+    "application/x-compressed-tar",
+    "application/x-cpio",
+    "application/x-deb",
+    "application/x-ear",
+    "application/x-gtar",
+    "application/x-gzip",
+    "application/x-java-archive",
+    "application/x-lha",
+    "application/x-lhz",
+    "application/x-lzip",
+    "application/x-lzip-compressed-tar",
+    "application/x-lzma",
+    "application/x-lzma-compressed-tar",
+    "application/x-lzop",
+    "application/x-lzop-compressed-tar",
+    "application/x-rar",
+    "application/x-rar-compressed",
+    "application/x-rpm",
+    "application/x-rzip",
+    "application/x-tar",
+    "application/x-tarz",
+    "application/x-stuffit",
+    "application/x-war",
+    "application/x-xz",
+    "application/x-xz-compressed-tar",
+    "application/x-zip",
+    "application/x-zip-compressed",
+    "application/x-zoo",
+    "application/zip",
+    "multipartapplication/x-zip""application/x-stuffit",
+    "application/x-war",
+    "application/x-xz",
+    "application/x-xz-compressed-tar",
+    "application/x-zip",
+    "application/x-zip-compressed",
+    "application/x-zoo",
+    "application/zip",
+    "multipartapplication/x-zip"
+    ]
+    
+    editorMime = [
+    "text/plain",
+    "text/css",
+    "text/javascript",
+    "text/mathml",
+    "text/x-c++hdr",
+    "text/x-c++src",
+    "text/x-csrc",
+    "text/x-chdr",
+    "text/x-dtd",
+    "text/x-java",
+    "text/x-javascript",
+    "text/x-makefile",
+    "text/x-moc",
+    "text/x-pascal",
+    "text/x-patch",
+    "text/x-perl",
+    "text/x-php",
+    "text/x-python",
+    "text/x-sql",
+    "text/x-tcl",
+    "text/x-tex",
+    "text/xml",
+    "application/javascript",
+    "application/x-cgi",
+    "application/x-javascript", 
+    "application/x-perl",
+    "application/x-php",
+    "application/x-python",
+    "application/x-shellscript",
+    "application/xml",
+    "application/xml-dtd",
+    ]
+    
+    webMime = [
+    "text/html",
+    "application/xhtml+xml",
+    "application/rss+xml",
+    "application/rdf+xml",
+    "x-scheme-handler/http",
+    "x-scheme-handler/https",
+    ]
+    
+    calcMime = [
+    "application/vnd.oasis.opendocument.spreadsheet",
+    "application/vnd.oasis.opendocument.spreadsheet-flat-xml",
+    "application/vnd.oasis.opendocument.spreadsheet-template",
+    "application/vnd.sun.xml.calc",
+    "application/vnd.sun.xml.calc.template",
+    "application/msexcel",
+    "application/vnd.ms-excel",
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    "application/vnd.ms-excel.sheet.macroenabled.12",
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.template",
+    "application/vnd.ms-excel.template.macroenabled.12",
+    "application/vnd.ms-excel.sheet.binary.macroenabled.12",
+    "application/x-dbf",
+    "text/spreadsheet",
+    ]
+    
+    
+    writerMime = [
+    "application/tab-separated-values", 
+    "text/tab-separated-values", 
+    "text/csv", 
+    "text/x-csv", 
+    "text/richtext", 
+    "text/rtf", 
+    "application/rtf", 
+    "application/vnd.oasis.opendocument.text",
+    "application/vnd.oasis.opendocument.text-flat-xml",
+    "application/vnd.oasis.opendocument.text-template",
+    "application/vnd.oasis.opendocument.text-web",
+    "application/vnd.oasis.opendocument.text-master",
+    "application/vnd.sun.xml.writer",
+    "application/vnd.sun.xml.writer.template",
+    "application/vnd.sun.xml.writer.global",
+    "application/vnd.ms-word",
+    "application/x-doc",
+    "application/x-hwp",
+    "application/vnd.wordperfect",
+    "application/wordperfect",
+    "application/vnd.lotus-wordpro",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    "application/vnd.ms-word.document.macroenabled.12",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.template",
+    "application/vnd.ms-word.template.macroenabled.12"
+    ]
+    
+    impressMime = [
+    "vnd.oasis.opendocument.presentation",
+    "vnd.oasis.opendocument.presentation-flat-xml",
+    "vnd.oasis.opendocument.presentation-template",
+    "vnd.sun.xml.impress",
+    "vnd.sun.xml.impress.template",
+    "mspowerpoint",
+    "vnd.ms-powerpoint",
+    "vnd.openxmlformats-officedocument.presentationml.presentation",
+    "vnd.ms-powerpoint.presentation.macroenabled.12",
+    "vnd.openxmlformats-officedocument.presentationml.template",
+    "vnd.ms-powerpoint.template.macroenabled.12",
+    "vnd.openxmlformats-officedocument.presentationml.slide",
+    "vnd.openxmlformats-officedocument.presentationml.slideshow",
+    ]
+    
+    
+    drawMime = [
+    "application/vnd.oasis.opendocument.graphics",
+    "application/vnd.oasis.opendocument.graphics-flat-xml",
+    "application/vnd.oasis.opendocument.graphics-template",
+    "application/vnd.sun.xml.draw",
+    "application/vnd.sun.xml.draw.template",
+    "application/vnd.visio"
+    ]
+    
+    mathMime = [
+    "application/vnd.oasis.opendocument.formula", 
+    "application/vnd.sun.xml.math"
+    ]
+    
+    
+    audioMime = [
+    "audio/x-mpegurl", 
+    "x-content/audio-player", 
+    "x-content/audio-cdda"
+    "audio/3gpp",
+    "audio/ac3",
+    "audio/AMR",
+    "audio/AMR-WB",
+    "audio/basic",
+    "audio/flac",
+    "audio/midi",
+    "audio/mp4",
+    "audio/mpeg",
+    "audio/mpegurl",
+    "audio/ogg",
+    "audio/prs.sid",
+    "audio/vnd.rn-realaudio",
+    "audio/x-ape",
+    "audio/x-flac",
+    "audio/x-gsm",
+    "audio/x-it",
+    "audio/x-m4a",
+    "audio/x-matroska",
+    "audio/x-mod",
+    "audio/x-mp3",
+    "audio/x-mpeg",
+    "audio/x-mpegurl",
+    "audio/x-ms-asf",
+    "audio/x-ms-asx",
+    "audio/x-ms-wax",
+    "audio/x-ms-wma",
+    "audio/x-musepack",
+    "audio/x-pn-aiff",
+    "audio/x-pn-au",
+    "audio/x-pn-realaudio",
+    "audio/x-pn-realaudio-plugin",
+    "audio/x-pn-wav",
+    "audio/x-pn-windows-acm",
+    "audio/x-realaudio",
+    "audio/x-real-audio",
+    "audio/x-sbc",
+    "audio/x-scpls",
+    "audio/x-speex",
+    "audio/x-tta",
+    "audio/x-vorbis",
+    "audio/x-vorbis+ogg",
+    "audio/x-wav",
+    "audio/x-wavpack",
+    "audio/x-xm",
+    ]
+    
+    videoMime = [
+    "application/mxf",
+    "application/ogg",
+    "application/ram",
+    "application/sdp",
+    "application/smil",
+    "application/smil+xml",
+    "application/vnd.ms-wpl",
+    "application/vnd.rn-realmedia",
+    "application/x-extension-m4a",
+    "application/x-extension-mp4",
+    "application/x-flac",
+    "application/x-flash-video",
+    "application/x-matroska",
+    "application/x-netshow-channel",
+    "application/x-ogg",
+    "application/x-quicktime-media-link",
+    "application/x-quicktimeplayer",
+    "application/x-shorten",
+    "application/x-smil",
+    "application/xspf+xml",
+    "image/vnd.rn-realpix",
+    "text/x-google-video-pointer",
+    "video/3gpp",
+    "video/dv",
+    "video/fli",
+    "video/flv",
+    "video/mp2t",
+    "video/mp4",
+    "video/mp4v-es",
+    "video/mpeg",
+    "video/msvideo",
+    "video/ogg",
+    "video/quicktime",
+    "video/vivo",
+    "video/vnd.divx",
+    "video/vnd.rn-realvideo",
+    "video/vnd.vivo",
+    "video/webm",
+    "video/x-anim",
+    "video/x-avi",
+    "video/x-flc",
+    "video/x-fli",
+    "video/x-flic",
+    "video/x-flv",
+    "video/x-m4v",
+    "video/x-matroska",
+    "video/x-mpeg",
+    "video/x-ms-asf",
+    "video/x-ms-asx",
+    "video/x-msvideo",
+    "video/x-ms-wm",
+    "video/x-ms-wmv",
+    "video/x-ms-wmx",
+    "video/x-ms-wvx",
+    "video/x-nsv",
+    "video/x-ogm+ogg",
+    "video/x-theora+ogg",
+    "video/x-smplayer-stream",
+    "x-content/video-dvd",
+    "x-content/video-vcd",
+    "x-content/video-svcd",
+    "x-scheme-handler/pnm",
+    "x-scheme-handler/mms",
+    "x-scheme-handler/net",
+    "x-scheme-handler/rtp",
+    "x-scheme-handler/rtsp",
+    "x-scheme-handler/mmsh",
+    "x-scheme-handler/uvox",
+    "x-scheme-handler/icy",
+    "x-scheme-handler/icyx"
+    "image/x-pict",
+    "misc/ultravox",
+    "text/google-video-pointer",
+    "text/x-google-video-pointer",
+    "video/3gpp",
+    "video/dv",
+    "video/fli",
+    "video/flv",
+    "video/mp2t",
+    "video/mp4",
+    "video/mp4v-es",
+    "video/mpeg",
+    "video/msvideo",
+    "video/ogg",
+    "video/quicktime",
+    "video/vivo",
+    "video/vnd.divx",
+    "video/vnd.rn-realvideo",
+    "video/vnd.vivo",
+    "video/webm",
+    "video/x-anim",
+    "video/x-avi",
+    "video/x-flc",
+    "video/x-fli",
+    "video/x-flic",
+    "video/x-flv",
+    "video/x-m4v",
+    "video/x-matroska",
+    "video/x-mpeg",
+    "video/x-ms-asf",
+    "video/x-ms-asx",
+    "video/x-msvideo",
+    "video/x-ms-wm",
+    "video/x-ms-wmv",
+    "video/x-ms-wmx",
+    "video/x-ms-wvx",
+    "video/x-nsv",
+    "video/x-ogm+ogg",
+    "video/x-theora+ogg",
+    "video/x-smplayer-stream",
+    "x-content/video-dvd",
+    "x-content/video-vcd",
+    "x-content/video-svcd",
+    "x-scheme-handler/pnm",
+    "x-scheme-handler/mms",
+    "x-scheme-handler/net",
+    "x-scheme-handler/rtp",
+    "x-scheme-handler/rtsp",
+    "x-scheme-handler/mmsh",
+    "x-scheme-handler/uvox",
+    "x-scheme-handler/icy",
+    "x-scheme-handler/icyx"
+    ]
+    generator = mimeGenerator(imageMime, imageProgram, graphMime, graphProgram, pdfMime, pdfProgram, 
+                 archiveMime, archiveProgram, webMime, webProgram, calcMime, calcProgram,
+                 writerMime, writerProgram, impressMime, impressProgram, drawMime, drawProgram, 
+                 mathMime, mathProgram, editorMime, editorProgram, audioMime, audioProgram,
+                 videoMime, videoProgram, ebookMime, ebookProgram,
+                 mimeFile
+                 )
+    generator.generate()
+

@@ -1,0 +1,4 @@
+for i in *.mp4 
+do 
+ffmpeg -i "${i}" -vn -ac 2 -f mp3 "`basename "$i" .mp4`.mp3"  
+done

@@ -1,0 +1,30 @@
+#!/bin/sh
+
+mpdif
+IFS='
+'
+
+if [ -z $1 ]
+then
+playlists=$(mpc lsplaylists)
+else
+playlists=$(mpc lsplaylists | grep $1)
+fi
+
+PS3="Your choice: "
+
+select play in $playlists QUIT
+do
+  case $play in
+    "QUIT")
+	break
+	;;
+    *)
+        mpc clear
+        mpc load $play
+	mpc play
+	break
+  esac
+done
+
+

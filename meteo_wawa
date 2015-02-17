@@ -1,0 +1,6 @@
+#!/bin/sh
+
+
+firefox -new-tab http://www.if.pw.edu.pl/~meteo/ -new-tab "http://new.meteo.pl/um/php/meteorogram_id_um.php?ntype=0u&id=2727" -new-tab "http://new.meteo.pl/php/meteorogram_id_coamps.php?ntype=2n&id=2727"
+
+

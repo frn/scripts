@@ -1,0 +1,34 @@
+
+#!/bin/bash
+
+WIDTH=300
+HEIGHT=300
+
+
+wid=$(xdotool search --classname progterm | head -n 1)
+
+
+if [ -z "$wid" ]; then
+
+ans=$(zenity  --list  --width $WIDTH --height $HEIGHT --title "progterm" --text "What ide you want to run?" --radiolist  --column "Pick" --column "IDE" TRUE Python2 FALSE Python3 FALSE Ruby); 
+
+case $ans in
+Python2)
+	toggle progterm 'urxvtcd -g 113x10+0+0 -name progterm -e python2'
+;;
+Python3)
+	toggle progterm 'urxvtcd -g 113x10+0+0 -name progterm -e python3'
+
+;;
+
+Ruby)
+        toggle progterm 'urxvtcd -g 113x10+0+0 -name progterm -e irb'
+
+;;
+esac
+
+
+else
+
+ toggle progterm 'lol'
+fi

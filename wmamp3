@@ -1,0 +1,15 @@
+#!/bin/bash
+
+current_directory=$( pwd )
+
+for i in *.wma; do mv "$i" `echo $i | tr ' ' '_'`; done
+
+for i in *.[Ww][Mm][Aa]; do mv "$i" `echo $i | tr '[A-Z]' '[a-z]'`; done
+
+for i in *.wma ; do mplayer -vo null -vc dummy -af resample=44100 -ao pcm -waveheader $i && lame -m s audiodump.wav -o $i; done
+
+for i in *.wma; do mv "$i" "`basename "$i" .wma`.mp3"; done
+
+echo "Konwersja plikow z Wma do Mp3 zakonczona"
+
+rm audiodump.wav

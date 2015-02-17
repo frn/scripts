@@ -1,0 +1,190 @@
+#!/usr/bin/env python2
+
+import sys,os
+from pprint import pprint
+
+try:
+    from lxml import etree
+except ImportError:
+    import xml.etree.ElementTree as etree
+
+from Tkinter import *
+
+
+# path and name of the rc.xml and saved keybinds files
+rc_fpath = os.environ["HOME"] + "/.config/openbox/rc.xml"
+
+
+
+def keyboard(shortcuts, names):
+    """read keyboard shorcuts"""
+    
+    
+    # Parse xml
+    strRoot="{http://openbox.org/3.4/rc}"
+    for n in names:
+        shortcuts[n] = [] 
+    tree = etree.parse(rc_fpath)
+    root = tree.getroot()
+    level = 0
+    for k in root.findall(strRoot+"keyboard/" + strRoot + "keybind"):
+        key = k.get("key")
+        action_element = k.find(strRoot+"action")
+        strTxt=""
+        if action_element!=None:
+            
+            if action_element.get("name")=="Execute":
+                name = names[0]
+                name_element=action_element.find(strRoot + "name")
+                command_element=action_element.find(strRoot + "command")
+                exec_element=action_element.find(strRoot + "execute")
+                
+                if name_element != None: 
+                    strTxt=name_element.text
+                elif command_element != None:
+                    strTxt=command_element.text
+                elif exec_element != None:
+                    strTxt=exec_element.text
+                    
+            elif action_element.get("name")=="ShowMenu":
+                name = names[1]
+                menu_element=action_element.find(strRoot + "menu")
+                if menu_element != None: strTxt=menu_element.text
+            else:
+                name = names[2]
+                action_name=action_element.get("name")
+                if action_name!=None: 
+                    strTxt=action_name       
+            shortcuts[name].append((key.strip(),strTxt.strip()))
+
+def check_rcfile(fpath,mode):
+    """Check if rc.xml exists, and is accessible"""
+    try:
+        f = open(fpath,mode)
+    except IOError as e:
+        return False
+    return True
+
+def mouse(shortcuts, title):
+    """read shortcuts for mouse"""
+    shortcuts[title] = []
+    # xml parser
+    strRoot = "{http://openbox.org/3.4/rc}"
+    tree = etree.parse(rc_fpath)
+    root = tree.getroot()
+    
+    # array of shortcuts
+    for k in root.findall(strRoot + 'mouse/' + strRoot + 'context'):
+        context = k.get("name")
+        shortcuts[title].append((context, "", "", ""))
+        for mb in k.findall(strRoot + 'mousebind'):
+            btn = mb.get("button")
+            actionBtn = mb.get("action")
+            if btn == None: btn = ""
+            if actionBtn == None : actionBtn = ""
+            
+            actions = ""
+            for act in mb.findall(strRoot + "action"):
+                if act.get("name") != None:
+                    actions += act.get("name") + ", "
+            if actions != "": actions = actions[:-2]
+            shortcuts[title].append("\t" + btn + " " + actionBtn + ":" + actions + "\n")
+            shortcuts[title][len(shortcuts[title]) - 1] = (context, btn, actionBtn, actions)
+
+def parseKeybordShortcuts(shortcuts, names):
+    table = ''
+    counter = 1
+    for typ in names:
+        shortcuts[typ].sort()
+        table = table + str(typ) + " \n\n"
+        for key, value in shortcuts[typ]:
+            table = table + str(counter).ljust(5) + key.ljust(18) + value + "\n"  
+            counter = counter + 1
+        table = table + "\n"
+    shortcuts[click].sort()
+    return table
+
+def parseMouseShortcuts(shortcuts, click):
+    table = click + "\n\n"
+    counter = 1    
+    for key, one, two, three in shortcuts[click]:
+        table = table + str(counter).ljust(5) + key.ljust(18) + one.ljust(10) + two.ljust(1) + three.ljust(10) + "\n" 
+        counter = counter + 1
+    table = table + "\n"
+    return table
+
+class mainWindow():
+
+    def showKeyboard(self):
+        self.textBox.delete("1.0", END)
+        self.textBox.insert(INSERT, parseKeybordShortcuts(shortcuts, names))
+
+    def showMouse(self):
+        self.textBox.delete("1.0", END)
+        self.textBox.insert(INSERT, parseMouseShortcuts(shortcuts, click))
+        
+    def __init__(self,root,shortcuts,names,click):
+
+        self.frameTop = Frame(root)
+        self.frame = Frame(root, height=70, width=140)
+        self.frameBottom = Frame(root)
+        
+        self.textBox = Text(self.frame)
+        self.scrollbar = Scrollbar(self.frame)
+        self.scrollbar.config(command=self.textBox.yview)
+        self.textBox.config(yscrollcommand=self.scrollbar.set)
+        self.textBox.pack(side=LEFT, fill=Y)
+        self.scrollbar.pack(side=RIGHT, fill=Y)
+        self.showKeyboard()
+        self.button = Button(self.frameBottom, text='OK', command=root.destroy)
+        self.button.pack( side = LEFT)
+
+        self.keyboard = Button(self.frameTop, text='KEYBOARD', command=self.showKeyboard)
+        self.keyboard.pack( side = LEFT) 
+                
+        self.mouse = Button(self.frameTop, text='MOUSE', command=self.showMouse)
+        self.mouse.pack( side = LEFT)         
+
+        
+        
+        self.frameTop.pack( side = TOP )
+        self.frame.pack()        
+        self.frameBottom.pack( side = BOTTOM )
+        
+        
+ 
+def usage():
+    return "USAGE: \n\n" + sys.argv[0] + " [w] \n\nw - if you want to display in graphic window" 
+ 
+if __name__ == "__main__":
+    msg = ""
+    if check_rcfile(rc_fpath,"r"):
+        shortcuts = {}
+        names = ['Execute', 'Menu', 'System']
+        click = 'Mouse'
+        keyboard(shortcuts, names)
+        mouse(shortcuts,click)       
+        if len(sys.argv) == 2: 
+            if sys.argv[1] == 'w':
+                root = Tk()
+                root.title("Keybinds")
+                root.geometry( "+75+75" )
+                app = mainWindow(root,shortcuts,names,click)
+                root.mainloop()
+            else:
+                msg = usage()
+        elif len(sys.argv) == 1:
+            print parseKeybordShortcuts(shortcuts, names) + parseMouseShortcuts(shortcuts, click)        
+        else:
+            msg = usage()
+                
+        
+    else:
+        msg = "\nCan't open rc.xml for parsing\n\
+        Check the filepath given: " + rc_fpath + "\n" + usage()
+    print msg
+    sys.exit(1)
+        
+
+        
+

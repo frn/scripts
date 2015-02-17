@@ -1,0 +1,33 @@
+#!/bin/sh
+
+CONF='/home/a/frnconf'
+
+
+if [[ $1 == 'conf' ]]
+then
+
+for hidden in `ls -a $CONF | egrep '^\.' | tail -n +3`
+do
+
+if [ ! -L ${HOME}/${hidden} ]
+then
+echo $hidden
+
+    ln -s ${CONF}/${hidden:1} ${HOME}/${hidden}
+fi
+done
+
+else
+
+for hidden in `ls -a $HOME | egrep '^\.' | tail -n +3`
+do
+
+if [ ! -L ${HOME}/${hidden} ]
+then
+echo $hidden
+   mv ${HOME}/${hidden} ${CONF}/${hidden:1}
+   ln -s ${CONF}/${hidden:1} ${HOME}/${hidden}
+fi
+done
+
+fi

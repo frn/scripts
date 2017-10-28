@@ -1,19 +1,2 @@
-#!/bin/bash
-
-wid=$(xdotool search --classname urxvtq | head -n 1)
-
-
-if [ -z "$wid" ]; then
-  urxvtcd -g 113x10+0+0 -name urxvtq
-  wid=$(xdotool search --classname urxvtq | head -n 1)
-  
-  xdotool windowfocus $wid
-  xdotool key Control_L+l
-elif [ -z "$(xdotool search --onlyvisible --classname urxvtq 2>/dev/null)" ]; then
-  
-  xdotool windowmap $wid
-  #xdotool windowfocus $wid
-else
-  
-  xdotool windowunmap $wid
-fi
+source toggle
+toggle urxvtq "urxvtcd -name urxvtq -geometry 80x28"

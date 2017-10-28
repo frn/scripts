@@ -1,15 +1,20 @@
 #!/bin/bash
 
-wid=$(xdotool search --classname $1 | head -n 1)
-
+function toggle {
+wid=$(xdotool search --classname $1)
 if [ -z "$wid" ]; then
   $2
-  wid=$(xdotool search --classname $1 | head -n 1)
-  xdotool windowfocus $wid
+  wid=$(xdotool search --classname $1 | head -1)
+  xdotool windowfocus "$wid"
   xdotool key Control_L+l
-elif [ -z "$(xdotool search --onlyvisible --classname $1 2>/dev/null)" ]; then
-  xdotool windowmap $wid
-  xdotool windowfocus $wid
 else
-  xdotool windowunmap $wid
+  if [ -z "$(xdotool search --onlyvisible --classname $1 2>/dev/null)" ]; then
+    xdotool windowmap "$wid"
+    xdotool windowfocus "$wid"
+  else
+    xdotool windowunmap "$wid"
+  fi
 fi
+}
+
+toggle $1 "$2"
